@@ -1,0 +1,13 @@
+{
+  "//": "stripe-proxy config — copy to stripe-config.json (gitignored) and fill in. NEVER commit real keys.",
+  "//keys": "Use a Stripe RESTRICTED key with read-only Charges/Balance scope, one per business. Not your secret key.",
+  "port": 3103,
+  "refreshMinutes": 60,
+  "fxApi": "https://open.er-api.com/v6/latest/USD",
+  "fxFallback": { "eur": 1.08, "thb": 0.028, "gbp": 1.27, "usd": 1 },
+  "accounts": [
+    { "code": "BIZ1", "name": "Example Business One", "key": "__YOUR_STRIPE_RESTRICTED_KEY__" },
+    { "code": "BIZ2", "name": "Example Business Two", "key": "__YOUR_STRIPE_RESTRICTED_KEY__" },
+    { "code": "BIZ3", "name": "Example Business Three", "key": "__YOUR_STRIPE_RESTRICTED_KEY__" }
+  ]
+}

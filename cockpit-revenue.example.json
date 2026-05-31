@@ -1,0 +1,9 @@
+{
+  "//": "SHAPE of /assets/cockpit-revenue.json and of the :3103 /revenue proxy response. usd = month-to-date, in USD. Real file is gitignored.",
+  "//codes": "Keys must match REV_ORDER / REV_WEIGHTS in cockpit-command-center.js.",
+  "accounts": {
+    "BIZ1": { "name": "Example Business One",   "usd": 1234, "charges": 12, "stale": false },
+    "BIZ2": { "name": "Example Business Two",   "usd": 567,  "charges": 5,  "stale": false },
+    "BIZ3": { "name": "Example Business Three", "usd": 0,    "charges": 0,  "stale": false }
+  }
+}

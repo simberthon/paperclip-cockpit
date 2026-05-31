@@ -1,0 +1,8 @@
+{
+  "//": "ical-proxy config — copy to config.json (which is gitignored) and fill in. Drives the NEXT BOOKING cell.",
+  "icalUrl": "https://calendar.google.com/calendar/ical/__YOUR_CALENDAR_ID__/private-__TOKEN__/basic.ics",
+  "port": 3102,
+  "refreshMinutes": 5,
+  "timezone": "UTC",
+  "calendarLabel": "Bookings"
+}

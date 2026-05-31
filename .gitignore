@@ -1,0 +1,24 @@
+# Whitelist model: ignore EVERYTHING, then un-ignore only the template's tracked
+# theme assets + example files. This guarantees no secret (config.json /
+# stripe-config.json / cockpit-*.json / *.log / keys) can ever be committed even
+# as new files appear in this directory — they simply don't match a whitelist line.
+*
+
+# --- theme source of truth (the durable, re-appliable theme) ---
+!.gitignore
+!README.md
+!REDEPLOY.md
+!apply-theme.sh
+!cockpit-injector.js
+!cockpit-loader.js
+!cockpit-canvas-grid.js
+!cockpit-command-center.js
+!cockpit-sw.js
+!paperclip-cockpit-theme-*.css
+
+# --- example/placeholder data (SHAPE only — never real values) ---
+!*.example.json
+
+# Real config + live data stay OUT of git (no whitelist line matches them):
+#   config.json  stripe-config.json  cockpit-booking.json
+#   cockpit-revenue.json  cockpit-quota.json  *.log  node_modules/

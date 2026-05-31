@@ -1,0 +1,14 @@
+{
+  "//": "SHAPE of /assets/cockpit-quota.json — written hourly by your own claude.ai usage scraper. Real file is gitignored.",
+  "//ts": "ts = epoch ms when scraped; the cockpit treats data older than 95 min as stale and falls back to its estimate.",
+  "ok": true,
+  "stale": false,
+  "ts": 0,
+  "sessionPct": 42,
+  "resetAtIso": "2026-01-01T00:00:00Z",
+  "resetInMin": 180,
+  "weeklyAllPct": 35,
+  "weeklyAllResetAtIso": "2026-01-04T17:00:00Z",
+  "weeklySonnetPct": 12,
+  "weeklySonnetResetAtIso": "2026-01-04T17:00:00Z"
+}

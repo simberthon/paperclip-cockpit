@@ -1,0 +1,1237 @@
+/*
+ * Cockpit theme for Paperclip UI — v23 (component parity sweep)
+ *
+ * Full blue → red conversion. Targets:
+ * 1. shadcn/ui OKLCH semantic tokens (--background, --primary, --card…)
+ * 2. Tailwind v4 color palette tokens (--color-blue-*)
+ * 3. Radix UI color scales (--slate-*, --blue-*)
+ * 4. Chart colors (--chart-1 was blue in dark theme)
+ * 5. Link color overrides
+ *
+ * Cockpit palette:
+ * Background: #0A0A0A → oklch(5% 0 0)
+ * Card: #111111 → oklch(8% 0 0)
+ * Red: #FC4239 → oklch(55% 0.22 22)
+ * Red hover: #FF5B52 → oklch(59% 0.22 22)
+ * Red light: #FF7A73 → oklch(65% 0.19 22)
+ * Text: #FFFFFF → oklch(98.5% 0 0)
+ */
+
+/* ═══════════════════════════════════════════════════════════════════
+ 1. shadcn/ui OKLCH semantic tokens
+ ═══════════════════════════════════════════════════════════════════ */
+.dark {
+ --background: oklch(5% 0 0) !important;
+ --card: oklch(8% 0 0) !important;
+ --popover: oklch(8% 0 0) !important;
+ --sidebar: oklch(5% 0 0) !important;
+ --sidebar-accent: oklch(11% 0 0) !important;
+ --secondary: oklch(11% 0 0) !important;
+ --muted: oklch(11% 0 0) !important;
+ --accent: oklch(11% 0 0) !important;
+
+ --foreground: oklch(98.5% 0 0) !important;
+ --card-foreground: oklch(98.5% 0 0) !important;
+ --popover-foreground: oklch(98.5% 0 0) !important;
+ --sidebar-foreground: oklch(98.5% 0 0) !important;
+ --sidebar-accent-foreground: oklch(98.5% 0 0) !important;
+ --secondary-foreground: oklch(98.5% 0 0) !important;
+ --accent-foreground: oklch(98.5% 0 0) !important;
+ --muted-foreground: oklch(65% 0 0) !important;
+
+ /* Primary → RED */
+ --primary: oklch(55% 0.22 22) !important;
+ --primary-foreground: oklch(98.5% 0 0) !important;
+ --sidebar-primary: oklch(55% 0.22 22) !important;
+ --sidebar-primary-foreground: oklch(98.5% 0 0) !important;
+
+ --border: oklch(18% 0 0) !important;
+ --input: oklch(18% 0 0) !important;
+ --ring: oklch(55% 0.22 22) !important;
+ --sidebar-border: oklch(18% 0 0) !important;
+ --sidebar-ring: oklch(55% 0.22 22) !important;
+
+ /* Charts — replace blue (#1 was blue) with red family */
+ --chart-1: oklch(55% 0.22 22) !important; /* red (was blue) */
+ --chart-2: oklch(52.7% .154 150.069) !important; /* keep green */
+ --chart-3: oklch(76.9% .188 70.08) !important; /* keep amber */
+ --chart-4: oklch(62.7% .265 303.9) !important; /* keep violet */
+ --chart-5: oklch(64.5% .246 16.439) !important; /* keep orange-red */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 2. Tailwind v4 blue palette → red equivalents
+ These drive utility classes like bg-blue-500, text-blue-600, etc.
+ ═══════════════════════════════════════════════════════════════════ */
+:root {
+ --color-blue-50: oklch(97% .012 22) !important;
+ --color-blue-100: oklch(93% .025 22) !important;
+ --color-blue-200: oklch(88% .06 22) !important;
+ --color-blue-300: oklch(80% .12 22) !important;
+ --color-blue-400: oklch(70% .18 22) !important;
+ --color-blue-500: oklch(62% 0.22 22) !important;
+ --color-blue-600: oklch(55% 0.22 22) !important; /* #FC4239 */
+ --color-blue-700: oklch(46% 0.20 22) !important;
+ --color-blue-800: oklch(36% 0.17 22) !important;
+ --color-blue-900: oklch(27% 0.13 22) !important;
+ --color-blue-950: oklch(18% 0.09 22) !important;
+
+ /* Indigo → deep red/wine (sidebars sometimes use indigo) */
+ --color-indigo-50: oklch(97% .012 22) !important;
+ --color-indigo-100: oklch(93% .025 22) !important;
+ --color-indigo-200: oklch(87% .06 22) !important;
+ --color-indigo-300: oklch(78% .13 22) !important;
+ --color-indigo-400: oklch(67% .19 22) !important;
+ --color-indigo-500: oklch(58% 0.22 22) !important;
+ --color-indigo-600: oklch(50% 0.21 22) !important;
+ --color-indigo-700: oklch(43% 0.19 22) !important;
+ --color-indigo-800: oklch(34% 0.15 22) !important;
+ --color-indigo-900: oklch(26% 0.11 22) !important;
+ --color-indigo-950: oklch(17% 0.08 22) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 3. Radix UI color scales
+ ═══════════════════════════════════════════════════════════════════ */
+.dark,
+.dark-theme {
+ --slate-1: #0A0A0A !important;
+ --slate-2: #111111 !important;
+ --slate-3: #1a1a1a !important;
+ --slate-4: #222222 !important;
+ --slate-5: #2a2a2a !important;
+ --slate-6: #333333 !important;
+ --slate-7: #404040 !important;
+ --slate-8: #555555 !important;
+ --slate-9: #888888 !important;
+ --slate-10: #999999 !important;
+ --slate-11: #cccccc !important;
+ --slate-12: #f5f5f5 !important;
+
+ --blue-1: #140706 !important;
+ --blue-2: #1f0c0a !important;
+ --blue-3: #3b100c !important;
+ --blue-4: #521512 !important;
+ --blue-5: #671d18 !important;
+ --blue-6: #7f2720 !important;
+ --blue-7: #a0342c !important;
+ --blue-8: #cc433a !important;
+ --blue-9: #FC4239 !important;
+ --blue-10: #FF5B52 !important;
+ --blue-11: #FF7A73 !important;
+ --blue-12: #FFD0CE !important;
+}
+
+/* p3 display override */
+@supports (color: color(display-p3 1 1 1)) {
+ @media (color-gamut: p3) {
+ .dark,
+ .dark-theme {
+ --slate-1: #0A0A0A !important;
+ --slate-2: #111111 !important;
+ --slate-3: #1a1a1a !important;
+ --slate-4: #222222 !important;
+ --slate-5: #2a2a2a !important;
+ --slate-6: #333333 !important;
+ --slate-7: #404040 !important;
+ --slate-8: #555555 !important;
+ --slate-9: #888888 !important;
+ --slate-10: #999999 !important;
+ --slate-11: #cccccc !important;
+ --slate-12: #f5f5f5 !important;
+ --blue-1: #140706 !important;
+ --blue-2: #1f0c0a !important;
+ --blue-3: #3b100c !important;
+ --blue-4: #521512 !important;
+ --blue-5: #671d18 !important;
+ --blue-6: #7f2720 !important;
+ --blue-7: #a0342c !important;
+ --blue-8: #cc433a !important;
+ --blue-9: #FC4239 !important;
+ --blue-10: #FF5B52 !important;
+ --blue-11: #FF7A73 !important;
+ --blue-12: #FFD0CE !important;
+ }
+ }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 4. Link color override — remove the blue tint from color-mix
+ ═══════════════════════════════════════════════════════════════════ */
+a {
+ color: inherit !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 5. Base / body reinforcement
+ ═══════════════════════════════════════════════════════════════════ */
+html,
+body {
+ background-color: #0A0A0A !important;
+}
+
+/* Scrollbar */
+* { scrollbar-color: #FC4239 #111111; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #111111; }
+::-webkit-scrollbar-thumb { background: #FC4239; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FF5B52; }
+
+/* Focus rings */
+*:focus-visible { outline-color: #FC4239 !important; }
+
+/* Text selection */
+::selection { background: rgba(252, 66, 57, 0.35); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════════
+ 6. Command center header bar offset 
+ ═══════════════════════════════════════════════════════════════════ */
+:root {
+ --command-bar-height: 32px;
+}
+
+body {
+ padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 7. Cockpit — cinematic background (BOLD v5)
+ Technique: grid on html.background + background-attachment:fixed
+ body transparent → html bg shows through = NO z-index issues
+ ═══════════════════════════════════════════════════════════════════ */
+
+@keyframes grid-drift {
+ 0% { background-position: 0 0, 0 0, 78% -10%, center; }
+ 100% { background-position: 40px 40px, 40px 40px, 78% -10%, center; }
+}
+
+@keyframes pulse-glow {
+ 0%, 100% { opacity: 0.85; }
+ 50% { opacity: 1; }
+}
+
+/* THE FIX: grid lives on html itself with background-attachment:fixed.
+ Body is transparent → html bg (= grid) shows through everywhere. */
+html {
+ background-image:
+ repeating-linear-gradient(90deg,
+ transparent 0px, transparent 39px,
+ rgba(252,66,57,0.18) 39px, rgba(252,66,57,0.18) 40px),
+ repeating-linear-gradient(0deg,
+ transparent 0px, transparent 39px,
+ rgba(252,66,57,0.18) 39px, rgba(252,66,57,0.18) 40px),
+ radial-gradient(ellipse 65% 55% at 78% 0%, rgba(252,66,57,0.35) 0%, transparent 65%),
+ radial-gradient(ellipse 40% 30% at 15% 100%, rgba(252,66,57,0.15) 0%, transparent 60%),
+ linear-gradient(180deg, #060606 0%, #0A0A0A 100%) !important;
+ background-attachment: fixed, fixed, fixed, fixed, fixed !important;
+ background-size:
+ 40px 40px,
+ 40px 40px,
+ 100% 100%,
+ 100% 100%,
+ 100% 100% !important;
+ background-color: #060606 !important;
+ animation: grid-drift 20s linear infinite !important;
+}
+
+/* Body must be transparent to let html's grid background show */
+html,
+body {
+ background-color: transparent !important;
+}
+body {
+ background-image: none !important;
+}
+
+/* Scanline overlay via body::before (z-index inside body's context = fine) */
+body {
+ position: relative;
+ isolation: isolate;
+}
+body::before {
+ content: '';
+ position: fixed;
+ inset: 0;
+ z-index: -1;
+ pointer-events: none;
+ background: repeating-linear-gradient(0deg,
+ transparent 0px, transparent 3px,
+ rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 8. Cockpit Command Center — bold HUD header bar (v7)
+ ═══════════════════════════════════════════════════════════════════ */
+/* : baseline raised 52px → 64px so the MTD REVENUE center pill (now a
+ 3-row stack: label + TOTAL/PI PROFIT totals + per-business chips) fits without
+ the old fixed-52px box clipping it. 
+ ("plus de hauteur"). This is only the FLOOR — the header is min-height + wrap
+ below, so it grows further (never clips) when content needs it. */
+:root { --command-bar-height: 64px; }
+body { padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important; }
+
+@keyframes cmd-bar-glow {
+ 0%, 100% { box-shadow: 0 2px 50px rgba(252,66,57,0.18), inset 0 -1px 0 rgba(252,66,57,0.15); }
+ 50% { box-shadow: 0 2px 50px rgba(252,66,57,0.32), inset 0 -1px 0 rgba(252,66,57,0.30); }
+}
+@keyframes cmd-live-blink {
+ 0%, 100% { opacity: 1; box-shadow: 0 0 8px #FC4239, 0 0 14px rgba(252,66,57,0.6); }
+ 50% { opacity: 0.35; box-shadow: 0 0 4px #FC4239; }
+}
+@keyframes cmd-scan {
+ 0% { transform: translateX(-100%); }
+ 100% { transform: translateX(100%); }
+}
+
+#cockpit-command-header {
+ position: fixed !important;
+ top: 0 !important; left: 0 !important; right: 0 !important;
+ /* : min-height (not fixed height) + wrap. The old fixed `height` with
+ `overflow:hidden` is exactly what clipped the totals row and squeezed
+ GOAL / CLAUDE RESET. Now the bar grows to fit its content and, if a wide row
+ still won't fit, a zone wraps to a second line instead of any number being
+ cut off. JS (syncBarHeight) tracks the real height into --cmd-bar-pad. */
+ min-height: var(--command-bar-height) !important;
+ z-index: 99999 !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: space-between !important;
+ flex-wrap: wrap !important;
+ gap: 4px 0 !important;
+ padding: 0 16px !important;
+ background:
+ linear-gradient(180deg, rgba(4,4,4,0.99) 0%, rgba(9,9,9,0.97) 100%) !important;
+ border-bottom: 1px solid rgba(252,66,57,0.45) !important;
+ font-family: 'JetBrains Mono','Fira Code','Cascadia Code',ui-monospace,monospace !important;
+ color: rgba(255,255,255,0.62) !important;
+ letter-spacing: 0.02em !important;
+ backdrop-filter: blur(14px) saturate(1.2) !important;
+ animation: cmd-bar-glow 4s ease-in-out infinite !important;
+ user-select: none !important;
+ overflow: hidden !important;
+}
+/* moving scanline sheen across the whole bar */
+#cockpit-command-header::before {
+ content: '' !important;
+ position: absolute !important;
+ top: 0 !important; bottom: 0 !important;
+ width: 30% !important;
+ background: linear-gradient(90deg, transparent, rgba(252,66,57,0.07), transparent) !important;
+ animation: cmd-scan 7s linear infinite !important;
+ pointer-events: none !important;
+}
+/* bright red underline */
+#cockpit-command-header::after {
+ content: '' !important;
+ position: absolute !important;
+ bottom: 0 !important; left: 0 !important; right: 0 !important;
+ height: 1px !important;
+ background: linear-gradient(90deg, transparent, rgba(252,66,57,0.6) 15%, #FC4239 50%, rgba(252,66,57,0.6) 85%, transparent) !important;
+}
+
+/* ── brand block ── */
+.cmd-brand { display: flex !important; align-items: center !important; gap: 9px !important; flex-shrink: 0 !important; }
+.cmd-brand-mark {
+ color: #FC4239 !important; font-size: 18px !important; line-height: 1 !important;
+ text-shadow: 0 0 16px rgba(252,66,57,0.8) !important;
+}
+.cmd-brand-text { display: flex !important; flex-direction: column !important; line-height: 1.05 !important; }
+.cmd-brand-name {
+ color: #fff !important; font-weight: 800 !important; font-size: 13px !important;
+ letter-spacing: 0.18em !important; text-shadow: 0 0 10px rgba(252,66,57,0.4) !important;
+}
+.cmd-brand-sub {
+ color: rgba(252,66,57,0.85) !important; font-weight: 600 !important; font-size: 7.5px !important;
+ letter-spacing: 0.32em !important;
+}
+.cmd-live {
+ display: inline-flex !important; align-items: center !important; gap: 4px !important;
+ margin-left: 4px !important; padding: 2px 6px !important;
+ border: 1px solid rgba(252,66,57,0.4) !important; border-radius: 3px !important;
+ font-size: 8px !important; font-weight: 700 !important; letter-spacing: 0.15em !important;
+ color: rgba(252,66,57,0.95) !important;
+}
+.cmd-live-dot {
+ width: 5px !important; height: 5px !important; border-radius: 50% !important;
+ background: #FC4239 !important; animation: cmd-live-blink 1.6s ease-in-out infinite !important;
+}
+
+/* ── separators ── */
+.cmd-sep {
+ width: 1px !important; height: 26px !important;
+ background: linear-gradient(180deg, transparent, rgba(252,66,57,0.3), transparent) !important;
+ margin: 0 13px !important; flex-shrink: 0 !important;
+}
+
+/* ── stacked time/date + weather/loc blocks ── */
+.cmd-block { display: flex !important; flex-direction: column !important; line-height: 1.15 !important; flex-shrink: 0 !important; }
+.cmd-time {
+ color: #fff !important; font-weight: 700 !important; font-size: 15px !important;
+ letter-spacing: 0.04em !important; text-shadow: 0 0 10px rgba(255,255,255,0.25) !important;
+ font-variant-numeric: tabular-nums !important;
+}
+.cmd-date { color: rgba(255,255,255,0.45) !important; font-size: 8.5px !important; letter-spacing: 0.14em !important; }
+.cmd-weather { color: rgba(255,255,255,0.78) !important; font-size: 11.5px !important; font-weight: 500 !important; }
+.cmd-loc { color: rgba(252,66,57,0.8) !important; font-size: 8.5px !important; letter-spacing: 0.08em !important; }
+
+/* ── HUD stat cells (goal / velocity / open / running / mtd / next) ── */
+.cmd-stat { display: flex !important; flex-direction: column !important; justify-content: center !important; gap: 2px !important; flex-shrink: 0 !important; min-width: 0 !important; }
+.cmd-stat-top { display: flex !important; align-items: center !important; gap: 4px !important; }
+.cmd-stat-ico { font-size: 9px !important; opacity: 0.9 !important; }
+.cmd-stat-label {
+ color: rgba(252,66,57,0.7) !important; font-size: 8px !important; font-weight: 700 !important;
+ letter-spacing: 0.14em !important;
+}
+.cmd-stat-val {
+ color: #fff !important; font-weight: 700 !important; font-size: 13px !important;
+ font-variant-numeric: tabular-nums !important; text-shadow: 0 0 8px rgba(252,66,57,0.25) !important;
+}
+.cmd-running-val {
+ color: #FC4239 !important;
+ text-shadow: 0 0 12px rgba(252,66,57,0.7) !important;
+}
+
+/* goal progress mini-bar */
+.cmd-bar {
+ width: 46px !important; height: 3px !important; border-radius: 2px !important;
+ background: rgba(255,255,255,0.1) !important; overflow: hidden !important; margin-top: 1px !important;
+}
+.cmd-bar-fill {
+ display: block !important; height: 100% !important; width: 0%;
+ background: linear-gradient(90deg, #FC4239, #FF7A73) !important;
+ box-shadow: 0 0 8px rgba(252,66,57,0.7) !important;
+ transition: width 0.8s ease !important;
+}
+
+/* velocity delta arrow */
+.cmd-velo-delta { font-size: 9px !important; font-weight: 700 !important; }
+.cmd-velo-delta.up { color: #2ecc71 !important; }
+.cmd-velo-delta.down { color: #FC4239 !important; }
+.cmd-velo-delta.flat { color: rgba(255,255,255,0.4) !important; }
+
+/* spacer + company quick-links */
+.cmd-spacer { flex: 1 1 auto !important; min-width: 12px !important; }
+.cmd-links { display: flex !important; align-items: center !important; gap: 3px !important; flex-shrink: 0 !important; }
+.cmd-company-link {
+ color: rgba(255,255,255,0.5) !important; text-decoration: none !important;
+ padding: 4px 9px !important; border-radius: 4px !important;
+ font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.08em !important;
+ border: 1px solid rgba(255,255,255,0.08) !important; text-transform: uppercase !important;
+ transition: all 0.15s !important;
+}
+.cmd-company-link:hover {
+ color: #fff !important; background: rgba(252,66,57,0.15) !important;
+ border-color: rgba(252,66,57,0.5) !important;
+ text-shadow: 0 0 8px rgba(252,66,57,0.5) !important;
+}
+
+
+/* ── cameras link ── */
+.cmd-cam {
+ display: inline-flex !important; align-items: center !important; gap: 5px !important;
+ text-decoration: none !important; flex-shrink: 0 !important;
+ padding: 4px 10px !important; border-radius: 4px !important;
+ border: 1px solid rgba(252,66,57,0.35) !important;
+ background: rgba(252,66,57,0.07) !important;
+ color: rgba(255,255,255,0.8) !important;
+ font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.1em !important;
+ transition: all 0.15s !important;
+}
+.cmd-cam:hover {
+ color: #fff !important; background: rgba(252,66,57,0.18) !important;
+ border-color: rgba(252,66,57,0.6) !important;
+ box-shadow: 0 0 14px rgba(252,66,57,0.3) !important;
+}
+.cmd-cam-ico { font-size: 12px !important; }
+.cmd-cam-dot {
+ width: 5px !important; height: 5px !important; border-radius: 50% !important;
+ background: #FC4239 !important; box-shadow: 0 0 6px #FC4239 !important;
+ animation: cmd-live-blink 1.6s ease-in-out infinite !important;
+}
+.cmd-sep-links { /* same as .cmd-sep, inherits */ }
+
+/* ═══════════════════════════════════════════════════════════════════
+ 9. Mobile optimization — viable + fast on phones
+ Strategy: bar becomes horizontally scrollable, font/padding shrink,
+ low-priority cells hide progressively. Touch-scroll, no overflow break.
+ ═══════════════════════════════════════════════════════════════════ */
+
+/* Tablet / small laptop — trim secondary text */
+@media (max-width: 1100px) {
+ .cmd-brand-sub, .cmd-loc, .cmd-date { display: none !important; }
+ .cmd-sep { margin: 0 9px !important; }
+}
+
+/* Narrow — drop MTD bar + velocity delta detail */
+@media (max-width: 860px) {
+ .cmd-bar { display: none !important; }
+ .cmd-velo-delta { display: none !important; }
+}
+
+/* Phone — compact HUD, horizontal scroll, keep the essentials big */
+@media (max-width: 640px) {
+ #cockpit-command-header {
+ padding: 6px 10px !important;
+ gap: 5px 0 !important;
+ animation: none !important;
+ }
+ #cockpit-command-header::before { animation: none !important; }
+ .cmd-brand-mark { font-size: 15px !important; }
+ .cmd-brand-name { font-size: 11px !important; letter-spacing: 0.12em !important; }
+ .cmd-live { display: none !important; }
+ .cmd-time { font-size: 13px !important; }
+ .cmd-cam { padding: 4px 8px !important; }
+}
+
+/* Very small phones — bare essentials */
+@media (max-width: 380px) {
+ .cmd-weather { display: none !important; }
+ .cmd-company-link { padding: 3px 6px !important; font-size: 9px !important; }
+}
+
+/* Touch devices: bigger tap targets regardless of width */
+@media (pointer: coarse) {
+ .cmd-company-link, .cmd-cam { min-height: 32px !important; display: inline-flex !important; align-items: center !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+ * — MTD revenue chips + enriched NEXT booking cell
+ * ════════════════════════════════════════════════════════════════════════ */
+
+/* enriched NEXT booking: client name (bright) over when/time (dim) */
+.cmd-stat-next .cmd-stat-val { line-height: 1.1 !important; }
+.cmd-book-client {
+ display: block !important; color: #fff !important; font-weight: 700 !important;
+ font-size: 12px !important; max-width: 150px !important; overflow: hidden !important;
+ text-overflow: ellipsis !important; white-space: nowrap !important;
+ text-shadow: 0 0 8px rgba(252,66,57,0.25) !important;
+}
+.cmd-book-when {
+ display: block !important; color: rgba(255,255,255,0.5) !important;
+ font-size: 8.5px !important; font-weight: 600 !important; letter-spacing: 0.06em !important;
+ font-variant-numeric: tabular-nums !important;
+}
+
+/* revenue group: label row over a row of per-business chips */
+.cmd-rev {
+ display: flex !important; flex-direction: column !important; justify-content: center !important;
+ gap: 3px !important; flex-shrink: 0 !important;
+}
+.cmd-rev-chips { display: flex !important; align-items: center !important; gap: 5px !important; }
+.cmd-rev-empty { color: rgba(255,255,255,0.4) !important; font-size: 12px !important; }
+.cmd-rev-chip {
+ display: inline-flex !important; flex-direction: column !important; align-items: center !important;
+ line-height: 1.05 !important; padding: 3px 8px !important; border-radius: 5px !important;
+ background: rgba(252,66,57,0.10) !important;
+ border: 1px solid rgba(252,66,57,0.28) !important;
+ flex-shrink: 0 !important; cursor: default !important;
+ transition: all 0.15s !important;
+}
+.cmd-rev-chip:hover {
+ background: rgba(252,66,57,0.18) !important;
+ border-color: rgba(252,66,57,0.6) !important;
+ box-shadow: 0 0 10px rgba(252,66,57,0.35) !important;
+}
+.cmd-rev-code {
+ color: rgba(252,66,57,0.85) !important; font-size: 7.5px !important; font-weight: 800 !important;
+ letter-spacing: 0.12em !important;
+}
+.cmd-rev-val {
+ color: #fff !important; font-size: 12px !important; font-weight: 700 !important;
+ font-variant-numeric: tabular-nums !important; text-shadow: 0 0 8px rgba(252,66,57,0.3) !important;
+}
+.cmd-rev-chip.cmd-rev-stale { opacity: 0.55 !important; }
+.cmd-rev-chip.cmd-rev-stale .cmd-rev-val { color: rgba(255,255,255,0.6) !important; }
+
+/* / : MTD totals row — gross "TOTAL" + ownership-weighted
+ "PI PROFIT" (personal profit), sitting ABOVE the per-business chips
+ . Label renamed PI PROFIT. */
+.cmd-rev-totals { display: flex !important; align-items: center !important; gap: 6px !important; }
+.cmd-rev-totals:empty { display: none !important; }
+.cmd-rev-total {
+ display: inline-flex !important; align-items: baseline !important; gap: 5px !important;
+ padding: 2px 8px !important; border-radius: 5px !important;
+ background: rgba(252,66,57,0.16) !important;
+ border: 1px solid rgba(252,66,57,0.4) !important;
+ flex-shrink: 0 !important; cursor: default !important;
+}
+.cmd-rev-total-w { /* "PI PROFIT" — the figure 
+ background: linear-gradient(90deg, rgba(252,66,57,0.30), rgba(252,66,57,0.16)) !important;
+ border-color: rgba(252,66,57,0.7) !important;
+ box-shadow: 0 0 10px rgba(252,66,57,0.30) !important;
+}
+.cmd-rev-tcode {
+ color: rgba(252,66,57,0.9) !important; font-size: 7.5px !important; font-weight: 800 !important;
+ letter-spacing: 0.12em !important;
+}
+.cmd-rev-total-w .cmd-rev-tcode { color: #fff !important; }
+.cmd-rev-tval {
+ color: #fff !important; font-size: 13px !important; font-weight: 800 !important;
+ font-variant-numeric: tabular-nums !important; text-shadow: 0 0 8px rgba(252,66,57,0.4) !important;
+}
+
+@media (max-width: 1280px) {
+ .cmd-rev-code { display: none !important; }
+}
+/* : below 1000px, drop the 4 per-business chips but KEEP the totals
+ visible — 
+ (previously the whole .cmd-rev block was hidden here). */
+@media (max-width: 1000px) {
+ #cockpit-command-header .cmd-rev-chips { display: none !important; }
+}
+/* ≤480px: header is tight — prioritize the WEIGHTED total (PI PROFIT) and fold the
+ gross into its tooltip rather than render both . */
+@media (max-width: 480px) {
+ #cockpit-command-header .cmd-rev-total:not(.cmd-rev-total-w) { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 10. Quota timer + Agents cell 
+ ═══════════════════════════════════════════════════════════════════ */
+
+/* AGENTS running/active — running in red, slash + active dimmed */
+.cmd-agents-slash { color: rgba(255,255,255,0.3) !important; margin: 0 1px !important; font-weight: 400 !important; }
+#cmd-agents-active { color: rgba(255,255,255,0.7) !important; }
+
+/* QUOTA session-window cell */
+.cmd-quota .cmd-bar { width: 52px !important; }
+.cmd-quota-fill {
+ background: linear-gradient(90deg, #2ecc71, #FFD166) !important; /* green→amber as window fills */
+ box-shadow: 0 0 8px rgba(255,209,102,0.5) !important;
+}
+.cmd-quota-fill.cmd-quota-hot {
+ background: linear-gradient(90deg, #FFD166, #FC4239) !important; /* amber→red near reset */
+ box-shadow: 0 0 10px rgba(252,66,57,0.7) !important;
+}
+#cmd-quota-left { color: #fff !important; }
+
+/* hide QUOTA on small screens (already crowded) */
+@media (max-width: 1000px) {
+ #cockpit-command-header .cmd-quota { display: none !important; }
+}
+@media (max-width: 640px) {
+ #cockpit-command-header .cmd-quota { display: none !important; }
+ .cmd-agents-slash, #cmd-agents-active { display: none !important; } /* show only running count on phone */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 11. Cockpit Command Center — boot/loading screen 
+ Inspired by Cockpit Scene Loader. Black + red, staggered fade-in.
+ ═══════════════════════════════════════════════════════════════════ */
+@keyframes cockpit-boot-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes cockpit-boot-pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes cockpit-boot-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cockpit-boot-drift { from { background-position: 0 0; } to { background-position: 44px 44px; } }
+
+#cockpit-boot {
+ position: fixed !important;
+ inset: 0 !important;
+ z-index: 2147483646 !important; /* above everything incl. header */
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ background: #060606 !important;
+ opacity: 1;
+ transition: opacity 0.55s ease !important;
+ overflow: hidden !important;
+}
+#cockpit-boot.cockpit-boot-out { opacity: 0 !important; pointer-events: none !important; }
+
+.cockpit-boot-glow {
+ position: absolute; inset: 0; pointer-events: none;
+ background: radial-gradient(ellipse 55% 45% at 50% 48%, rgba(252,66,57,0.16), transparent 70%);
+}
+.cockpit-boot-grid {
+ position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+ background:
+ repeating-linear-gradient(90deg, transparent 0 43px, rgba(252,66,57,0.06) 43px 44px),
+ repeating-linear-gradient(0deg, transparent 0 43px, rgba(252,66,57,0.06) 43px 44px);
+ animation: cockpit-boot-drift 18s linear infinite;
+}
+
+.cockpit-boot-core {
+ position: relative;
+ display: flex; flex-direction: column; align-items: center;
+ gap: 20px; padding: 0 24px; text-align: center;
+ font-family: 'JetBrains Mono','Fira Code','Cascadia Code',ui-monospace,monospace;
+}
+
+.cockpit-boot-brand {
+ display: flex; align-items: center; gap: 12px;
+ animation: cockpit-boot-fade 0.4s ease-out both;
+}
+.cockpit-boot-mark {
+ color: #FC4239; font-size: 40px; line-height: 1;
+ text-shadow: 0 0 28px rgba(252,66,57,0.8);
+}
+.cockpit-boot-name {
+ color: #fff; font-weight: 800; font-size: 40px; letter-spacing: 0.16em;
+ text-shadow: 0 0 18px rgba(252,66,57,0.45);
+}
+.cockpit-boot-sub {
+ color: rgba(252,66,57,0.9); font-weight: 700; font-size: 14px;
+ letter-spacing: 0.42em; align-self: center; margin-left: 2px;
+}
+
+.cockpit-boot-status {
+ display: flex; align-items: center; gap: 8px; margin-top: 4px;
+ color: #888; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+ animation: cockpit-boot-fade 0.4s ease-out both;
+}
+.cockpit-boot-dot {
+ width: 8px; height: 8px; border-radius: 50%; background: #FC4239;
+ box-shadow: 0 0 10px #FC4239; animation: cockpit-boot-pulse 0.8s ease-in-out infinite;
+}
+
+.cockpit-boot-bar {
+ position: relative; width: 300px; max-width: 76vw; height: 2px;
+ border-radius: 2px; background: #1a1a1a; overflow: hidden;
+ animation: cockpit-boot-fade 0.4s ease-out both;
+}
+.cockpit-boot-fill {
+ position: absolute; inset: 0; transform-origin: left;
+ background: linear-gradient(to right, #FC4239 0%, #FF6B5C 70%, #fff 100%);
+ filter: drop-shadow(0 0 5px rgba(252,66,57,0.6));
+ animation: cockpit-boot-fill 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+.cockpit-boot-readouts {
+ display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+ width: 300px; max-width: 76vw; margin-top: 2px;
+ font-size: 11px; letter-spacing: 0.1em; font-variant-numeric: tabular-nums;
+ animation: cockpit-boot-fade 0.4s ease-out both;
+}
+.cockpit-boot-readouts .k { color: #666; }
+.cockpit-boot-readouts .v { color: #fff; }
+
+.cockpit-boot-foot {
+ margin-top: 14px; color: #444; font-size: 9px;
+ letter-spacing: 0.22em; text-transform: uppercase;
+ animation: cockpit-boot-fade 0.4s ease-out both;
+}
+
+@media (max-width: 480px) {
+ .cockpit-boot-mark, .cockpit-boot-name { font-size: 30px; }
+ .cockpit-boot-sub { font-size: 11px; letter-spacing: 0.3em; }
+ .cockpit-boot-readouts { gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .cockpit-boot-grid, .cockpit-boot-dot { animation: none !important; }
+ .cockpit-boot-fill { animation-duration: 0.4s !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 12. Three-zone header layout — LEFT data · CENTER business · RIGHT links
+ ═══════════════════════════════════════════════════════════════════ */
+.cmd-zone {
+ display: flex !important;
+ align-items: center !important;
+ min-width: 0 !important;
+}
+.cmd-zone-left { justify-content: flex-start !important; }
+.cmd-zone-center {
+ justify-content: center !important;
+ gap: 0 !important;
+ /* subtle "business" grouping: faint outlined pill */
+ padding: 4px 14px !important;
+ border: 1px solid rgba(252,66,57,0.18) !important;
+ border-radius: 8px !important;
+ background: rgba(252,66,57,0.04) !important;
+}
+.cmd-zone-right { justify-content: flex-end !important; }
+
+/* keep a little breathing room so center never collides with the side zones */
+.cmd-zone-left { margin-right: 14px !important; }
+.cmd-zone-right { margin-left: 14px !important; }
+
+/* : on desktop (>760px, where the bar is a single flex row) keep each
+ zone at its natural width — never shrink. Before this, the wider CENTER pill
+ (TOTAL + PI PROFIT side by side) compressed the LEFT zone until GOAL / QUOTA /
+ CLAUDE RESET were clipped by the header's overflow:hidden. With no-shrink + the
+ header's flex-wrap, a too-wide row now pushes a whole zone onto a second line
+ instead of cutting any number. (≤760px each zone is forced to 100% width below,
+ which overrides this — mobile wrapping is unchanged.) */
+@media (min-width: 761px) {
+ .cmd-zone { flex-shrink: 0 !important; }
+}
+
+/* ── MOBILE (≤760px): wrap the header onto MULTIPLE LINES, never overflow ──
+ the user: horizontal scroll made the whole page drag side-to-side. */
+@media (max-width: 760px) {
+ #cockpit-command-header {
+ height: auto !important;
+ min-height: 0 !important;
+ flex-wrap: wrap !important;
+ align-items: center !important;
+ justify-content: center !important;
+ row-gap: 6px !important;
+ column-gap: 0 !important;
+ overflow: hidden !important;
+ padding: 7px 10px !important;
+ }
+ .cmd-zone {
+ width: 100% !important;
+ flex: 0 0 100% !important;
+ flex-wrap: wrap !important;
+ justify-content: center !important;
+ margin: 0 !important;
+ row-gap: 4px !important;
+ }
+ .cmd-zone-center { padding: 4px 10px !important; }
+ .cmd-zone .cmd-sep { height: 16px !important; margin: 0 8px !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 13. Anti horizontal-overflow safety net (mobile fix)
+ ═══════════════════════════════════════════════════════════════════ */
+html, body { max-width: 100% !important; overflow-x: hidden !important; }
+#cockpit-command-header { max-width: 100vw !important; box-sizing: border-box !important; }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 14. Header height vs body padding decoupling (mobile fix)
+ Header height = CSS (fixed 52px desktop / auto mobile). Body padding tracks
+ the REAL rendered height via --cmd-bar-pad (set by syncBarHeight in JS), so a
+ wrapped multi-row mobile header never overlaps content and desktop stays 52px.
+ ═══════════════════════════════════════════════════════════════════ */
+body { padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important; }
+@media (max-width: 760px) {
+ #cockpit-command-header { height: auto !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 15. COMPONENT PARITY SWEEP — Cockpit card language 
+ Brings Paperclip's shadcn/ui primitives to the Cockpit look:
+ sharp edges (radius 0), red accent borders, subtle red glow.
+ Targets stable [data-slot="…"] hooks shadcn sets on every primitive
+ (verified present in the ui-dist bundle), so these survive utility-
+ class churn and npm updates. Colors reuse the v13 red tokens
+ (#FC4239 / rgba(252,66,57,*)) already defined in §1–§3 above — no new
+ palette. Avatars stay round (identity shape), everything else squares off.
+ ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Sharp edges across the component set (avatars excluded) ───────── */
+[data-slot="button"],
+[data-slot="icon-button"],
+[data-slot="badge"],
+[data-slot="card"],
+[data-slot="input"],
+[data-slot="textarea"],
+[data-slot="select-trigger"],
+[data-slot="select-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="popover-content"],
+[data-slot="dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="tooltip-content"],
+[data-slot="checkbox"],
+[data-slot="command"],
+[data-slot="tabs-list"],
+[data-slot="tabs-trigger"] {
+ border-radius: 0 !important;
+}
+
+/* ── Cards: red hairline border + subtle inset glow ───────────────── */
+[data-slot="card"] {
+ border: 1px solid rgba(252, 66, 57, 0.20) !important;
+ box-shadow:
+ inset 0 0 0 1px rgba(252, 66, 57, 0.04),
+ 0 6px 22px rgba(0, 0, 0, 0.45) !important;
+ background-image:
+ linear-gradient(180deg, rgba(252, 66, 57, 0.025) 0%, transparent 38%) !important;
+}
+[data-slot="card-title"] {
+ letter-spacing: 0.01em !important;
+}
+
+/* ── Buttons: keep variant colors, add Cockpit edge + hover/focus glow.
+ Only touch radius + interaction glow so destructive/ghost/link variants
+ keep their semantics. ───────────────────────────────────────────── */
+[data-slot="button"]:hover,
+[data-slot="icon-button"]:hover {
+ box-shadow: 0 0 14px rgba(252, 66, 57, 0.28) !important;
+}
+[data-slot="button"]:focus-visible,
+[data-slot="icon-button"]:focus-visible {
+ outline: 1px solid #FC4239 !important;
+ outline-offset: 1px !important;
+ box-shadow: 0 0 0 3px rgba(252, 66, 57, 0.25) !important;
+}
+
+/* ── Badges: square + red hairline so every variant reads on-brand ── */
+[data-slot="badge"] {
+ border-color: rgba(252, 66, 57, 0.45) !important;
+ letter-spacing: 0.02em !important;
+}
+
+/* ── Form controls: red focus ring + subtle glow (uses --ring=red) ── */
+[data-slot="input"],
+[data-slot="textarea"],
+[data-slot="select-trigger"] {
+ border-color: rgba(252, 66, 57, 0.22) !important;
+ transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+[data-slot="input"]:focus,
+[data-slot="input"]:focus-visible,
+[data-slot="textarea"]:focus,
+[data-slot="textarea"]:focus-visible,
+[data-slot="select-trigger"]:focus,
+[data-slot="select-trigger"]:focus-visible,
+[data-slot="select-trigger"][data-state="open"] {
+ border-color: #FC4239 !important;
+ box-shadow: 0 0 0 3px rgba(252, 66, 57, 0.22) !important;
+}
+
+/* ── Floating surfaces (modals/menus/popovers): red border + real glow.
+ These sit above the page, so the glow is a touch stronger than cards. */
+[data-slot="dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="popover-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="select-content"],
+[data-slot="command"] {
+ border: 1px solid rgba(252, 66, 57, 0.35) !important;
+ box-shadow:
+ 0 0 0 1px rgba(252, 66, 57, 0.10),
+ 0 18px 50px rgba(0, 0, 0, 0.70),
+ 0 0 30px rgba(252, 66, 57, 0.12) !important;
+}
+[data-slot="dialog-overlay"],
+[data-slot="sheet-overlay"] {
+ background: rgba(4, 4, 4, 0.72) !important;
+ backdrop-filter: blur(2px) !important;
+}
+[data-slot="tooltip-content"] {
+ border: 1px solid rgba(252, 66, 57, 0.40) !important;
+}
+
+/* ── Tables: sharp, red header underline, subtle row separators.
+ Scoped to real page tables — the HUD header uses no <table>, so this
+ never reaches the command bar. ──────────────────────────────────── */
+main table,
+[role="main"] table,
+table[role="table"] {
+ border-collapse: collapse !important;
+ border-radius: 0 !important;
+}
+main table thead,
+[role="main"] table thead,
+table[role="table"] [role="rowgroup"]:first-child {
+ border-bottom: 1px solid rgba(252, 66, 57, 0.35) !important;
+}
+main table th,
+[role="main"] table th {
+ color: rgba(252, 66, 57, 0.95) !important;
+ letter-spacing: 0.04em !important;
+ text-transform: uppercase !important;
+ font-size: 0.72rem !important;
+}
+main table tbody tr,
+[role="main"] table tbody tr {
+ border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+main table tbody tr:hover,
+[role="main"] table tbody tr:hover {
+ background: rgba(252, 66, 57, 0.06) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 16. OVERLAP-BUG FIX — overlay stacking above the HUD header 
+ Bug: the Command Center header is z-index:99999, but every Radix
+ overlay (dialog/sheet/popover/dropdown/select/tooltip) relies on the
+ app default (app's highest z-index is 9999). Result: the persistent
+ HUD floats ON TOP of open modals/menus — covering close buttons and
+ the top of dialogs (a real "can't dismiss" overlap). Fix: lift the
+ functional overlay layer above the decorative HUD, but keep it below
+ the boot screen (#cockpit-boot = 2147483646). Modal backdrops then dim
+ the header too, which is the correct modal behavior.
+ ═══════════════════════════════════════════════════════════════════ */
+[data-slot="dialog-overlay"],
+[data-slot="sheet-overlay"] {
+ z-index: 2147483600 !important;
+}
+[data-slot="dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="popover-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="select-content"],
+[data-slot="tooltip-content"],
+[data-slot="command"] {
+ z-index: 2147483601 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 17. CONTRAST HARDENING — ≥4.5:1 on all dark surfaces 
+ Audited every text token against its surface (script: WCAG 2.1 ratio).
+ Component surfaces already passed (white-on-card 18.9:1, muted-fg
+ 6.6:1, red #FC4239 on black 5.64:1). The HUD micro-labels failed —
+ they used low-alpha red/white that dimmed below 4.5:1. Solidify the
+ red (solid #FC4239 = 5.64:1) and lift the dim whites to .60 (7.3:1).
+ Sizes/weights unchanged — color only.
+ ═══════════════════════════════════════════════════════════════════ */
+.cmd-stat-label { color: #FC4239 !important; } /* was rgba(.7) 3.23:1 → 5.64:1 */
+.cmd-rev-code { color: #FF5B52 !important; } /* was rgba(.85) 4.36:1 → ~6.7:1 */
+.cmd-loc { color: #FF5B52 !important; } /* was rgba(.8) 3.96:1 → ~6.7:1 */
+.cmd-brand-sub { color: #FF5B52 !important; } /* was rgba(.85) 4.36:1 → ~6.7:1 */
+.cmd-date { color: rgba(255, 255, 255, 0.60) !important; } /* was .45 4.46:1 → 7.29:1 */
+.cmd-rev-empty { color: rgba(255, 255, 255, 0.60) !important; } /* was .40 3.75:1 → 7.29:1 */
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 18. Cockpit display typography pass 
+ Bold condensed display type for headings / nav / buttons — Cockpit
+ energy: uppercase + tight tracking. Body stays a clean sans at ≥16px so it
+ never drops below readable size on mobile.
+
+ NOTE (collision ×): both tasks branched v23 off v22 in
+ parallel; 's CSS write landed last and clobbered this typography
+ section. Re-merged here as §18/§19 ON TOP of 's §15–17 so both
+ ship. owns color/surface/contrast; owns type. No overlap.
+
+ Fonts are LOADED by cockpit-injector.js (and the static <link> in the
+ apply-theme.sh cockpit block) — Oswald (display) + JetBrains Mono (HUD/code).
+ This layer only *applies* the families via tokens; it never assumes a font
+ is present without the injector also fetching it.
+ ═══════════════════════════════════════════════════════════════════ */
+:root {
+ /* Families */
+ --bz-font-display: 'Oswald', 'Archivo Narrow', 'Arial Narrow', system-ui, sans-serif;
+ --bz-font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+ --bz-font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+
+ /* Type scale — clamp(min, fluid, max). Mins are mobile-safe (≤480px) and
+ never drop body below 16px. Headings stay ≥ body at every breakpoint. */
+ --bz-fs-display: clamp(26px, 5.5vw, 42px); /* hero / page display */
+ --bz-fs-h1: clamp(23px, 4vw, 32px);
+ --bz-fs-h2: clamp(20px, 3vw, 25px);
+ --bz-fs-h3: clamp(18px, 2.4vw, 20px);
+ --bz-fs-h4: 17px;
+ --bz-fs-body: 16px;
+ --bz-fs-sm: 14px;
+ --bz-fs-xs: 12px;
+
+ /* Tracking — tight on display per Cockpit brief; a touch looser on small
+ all-caps labels purely for legibility. */
+ --bz-track-display: 0.005em;
+ --bz-track-head: 0.02em;
+ --bz-track-label: 0.08em;
+}
+
+/* ── Body baseline: clean sans, ≥16px, comfortable line-height ──────────── */
+body {
+ font-family: var(--bz-font-body) !important;
+ font-size: var(--bz-fs-body) !important;
+ line-height: 1.5 !important;
+ -webkit-text-size-adjust: 100% !important;
+ text-rendering: optimizeLegibility;
+ -webkit-font-smoothing: antialiased;
+}
+
+/* ── Headings → bold condensed display, uppercase, tight tracking ───────── */
+h1, h2, h3, h4,
+[data-slot="card-title"],
+[data-slot="dialog-title"],
+[data-slot="alert-dialog-title"],
+[data-slot="sheet-title"],
+[data-slot="alert-title"] {
+ font-family: var(--bz-font-display) !important;
+ text-transform: uppercase !important;
+ font-weight: 700 !important;
+ line-height: 1.08 !important;
+ letter-spacing: var(--bz-track-head) !important;
+ /* Never let a long unbroken word push horizontal scroll at ≤480px. */
+ overflow-wrap: break-word !important;
+ word-break: break-word !important;
+ max-width: 100% !important;
+}
+h1 { font-size: var(--bz-fs-h1) !important; letter-spacing: var(--bz-track-display) !important; }
+h2,
+[data-slot="dialog-title"],
+[data-slot="alert-dialog-title"],
+[data-slot="sheet-title"] { font-size: var(--bz-fs-h2) !important; }
+h3,
+[data-slot="card-title"],
+[data-slot="alert-title"] { font-size: var(--bz-fs-h3) !important; font-weight: 600 !important; }
+h4 { font-size: var(--bz-fs-h4) !important; font-weight: 600 !important; }
+
+/* ── Nav ───────────────────────────────────────────────────────────────
+ Section group labels are short + static → full Cockpit uppercase treatment.
+ Menu items / links carry dynamic names (companies, issues) → display font
+ for energy but NO uppercase, so names stay readable. */
+[data-sidebar="group-label"] {
+ font-family: var(--bz-font-display) !important;
+ text-transform: uppercase !important;
+ font-weight: 700 !important;
+ letter-spacing: var(--bz-track-label) !important;
+}
+[data-sidebar="menu-button"],
+nav a,
+[role="navigation"] a {
+ font-family: var(--bz-font-display) !important;
+ font-weight: 600 !important;
+ letter-spacing: var(--bz-track-head) !important;
+}
+
+/* ── Buttons → condensed display, uppercase, snappy ─────────────────────
+ Short UI labels (Save / Create / Cancel) read great in caps. Icon-only
+ buttons are unaffected by transform. Inputs/textareas explicitly excluded. */
+button,
+[role="button"],
+[data-slot="button"],
+a[data-slot="button"] {
+ font-family: var(--bz-font-display) !important;
+ text-transform: uppercase !important;
+ font-weight: 600 !important;
+ letter-spacing: 0.05em !important;
+}
+
+/* ── Code / mono surfaces → actually load the intended mono now ─────────── */
+code, pre, kbd, samp,
+[data-slot="code"],
+.font-mono {
+ font-family: var(--bz-font-mono) !important;
+}
+
+/* ── Guard: keep the cockpit HUD + boot screen on their own type system.
+ They set deliberate wide-tracking / mono looks; re-assert so the global
+ heading/button rules above don't bleed into them. ────────────────────── */
+#cockpit-command-header,
+#cockpit-command-header * {
+ font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace !important;
+}
+#cockpit-command-header h1,
+#cockpit-command-header h2,
+#cockpit-command-header h3,
+#cockpit-command-header h4,
+#cockpit-command-header button,
+#cockpit-command-header [role="button"] {
+ text-transform: none !important;
+ letter-spacing: 0.02em !important;
+}
+[class*="cockpit-boot"] {
+ text-transform: none !important;
+}
+
+/* ── Forms must never inherit caps/condensed — keep input text natural ─── */
+input, textarea, select, [contenteditable="true"] {
+ font-family: var(--bz-font-body) !important;
+ text-transform: none !important;
+ letter-spacing: normal !important;
+ font-size: max(16px, 1em) !important; /* ≥16px also prevents iOS zoom-on-focus */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ 19. Mobile typography safety (≤480px) — verified no heading overflow
+ ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+ :root {
+ --bz-fs-display: clamp(24px, 7vw, 30px);
+ --bz-fs-h1: clamp(21px, 6vw, 26px);
+ --bz-fs-h2: clamp(19px, 5vw, 22px);
+ --bz-fs-h3: 18px;
+ }
+ /* Body text floor — readable, never below 16px on phones. */
+ body { font-size: 16px !important; }
+ /* Belt-and-suspenders: any heading still wraps instead of scrolling. */
+ h1, h2, h3, h4 {
+ overflow-wrap: break-word !important;
+ word-break: break-word !important;
+ hyphens: auto;
+ max-width: 100% !important;
+ }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 20. — chat composer + Send reachable (root-shell height lock)
+
+ Symptom : bottom of the interface cropped,
+ the chat composer + Send button off-screen and unreachable — "check the
+ maximums".
+
+ Grounded cause (inspected live, your Paperclip host):
+ Paperclip's app shell `#root > .bg-background` is, per route:
+ - issue/chat : `... flex h-dvh flex-col overflow-hidden` — a FIXED 100dvh
+ column whose inner `<main ... overflow-auto>` is the real scroll
+ viewport; the composer is pinned inside it via `position:sticky;
+ bottom`.
+ - dashboard : `... min-h-dvh` — a document-flow shell that grows with
+ content and relies on document scroll.
+ Our fixed command bar reserves its strip via `body{padding-top:
+ --cmd-bar-pad}` (section 14). That padding shoves the WHOLE 100dvh shell
+ DOWN by the bar height, so the shell's bottom — where the sticky composer
+ pins — falls below the viewport and is clipped by Paperclip's base
+ `body{overflow:hidden}`. Net: composer + Send sit in the clipped band with
+ no scroll to reach them.
+
+ Fix (two parts, one scroll container per route):
+ (a) Cap the shell to the space BELOW the bar so the fixed chat column fits
+ on-screen. `h-dvh` -> height; `min-h-dvh` -> min-height floor (so the
+ dashboard can still grow). The inner `<main>` keeps its own scroll and
+ the sticky composer now pins at the TRUE viewport bottom.
+ (b) Let `body` scroll (overflow-y:auto) so document-flow routes whose shell
+ grows past the viewport (dashboard) are fully reachable. overflow-x
+ stays hidden (section 13 horizontal-overflow guard); overflow-y is set
+ explicitly because `visible` would compute to `auto` anyway when the
+ other axis is clipped, and we want a real scroll container here.
+
+ `--cmd-bar-pad` is the REAL rendered bar height (set by syncBarHeight in
+ cockpit-command-center.js — it wraps taller on narrow viewports), so the
+ cap tracks the bar at every width. `dvh` (not `vh`) absorbs mobile browser
+ chrome. Verified live desktop (1440x779, bar 116): composer 627-651 & Send
+ 667-703 fully in view, body no-scroll; dashboard (606x679, bar 142): body
+ scrolls full 2971px, bottom reachable.
+ ═══════════════════════════════════════════════════════════════════ */
+body { overflow-y: auto !important; }
+#root > .bg-background.h-dvh {
+ height: calc(100dvh - var(--cmd-bar-pad, var(--command-bar-height, 64px))) !important;
+}
+#root > .bg-background.min-h-dvh {
+ min-height: calc(100dvh - var(--cmd-bar-pad, var(--command-bar-height, 64px))) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ 21. — kill the mobile nested-scroll trap (single page scroll)
+ ───────────────────────────────────────────────────────────────────
+ §20 made BODY the page scroll on document-flow routes, but the dashboard
+ AGENT FEED still nested INDEPENDENT scroll boxes inside that page: every
+ agent card is `div.flex.h-[320px].flex-col.overflow-hidden` wrapping an
+ inner `div.min-h-0.flex-1.overflow-y-auto.p-3`. On a phone a swipe that
+ landed on a card scrolled the CARD, not the page — the "stuck / janky"
+ trap .
+
+ Reproduced live at a TRUE 386px device width (same-origin iframe, since
+ window-resize hard-clamps to 500px): 4 scroll containers on one screen —
+ BODY (the page, intended) + the off-canvas sidebar NAV (allowed: a closed
+ drawer at left:-240, opens on demand, never on the main scroll path) + the
+ agent cards (the actual trap, each a fixed 320px box with its own scroll).
+
+ Fix (mobile ≤760px ONLY — desktop >760px keeps the fixed-height card grid,
+ so / the desktop layout do not regress): release the card's fixed
+ 320px height and BOTH overflow clamps so each card grows to its content and
+ flows into the single BODY scroll. Scoped to the distinctive arbitrary
+ height `h-[320px]` so the app-wide `.overflow-y-auto` utility and the chat
+ route's intended inner <main> scroll (§20) stay untouched. WHY 760px: matches
+ §14's existing mobile header breakpoint, so the whole shell switches together.
+ Verified no horizontal overflow at 375 / 390 / 414 (scrollWidth==clientWidth).
+ ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 760px) {
+ /* the fixed-height agent-feed card shell → grow with its content */
+ .flex.h-\[320px\].flex-col.overflow-hidden {
+ height: auto !important;
+ max-height: none !important;
+ overflow: visible !important;
+ }
+ /* its inner scroll region → release the captured scroll into the page */
+ .flex.h-\[320px\].flex-col.overflow-hidden > .min-h-0.flex-1.overflow-y-auto {
+ overflow-y: visible !important;
+ min-height: 0 !important;
+ max-height: none !important;
+ flex: 0 0 auto !important;
+ }
+}

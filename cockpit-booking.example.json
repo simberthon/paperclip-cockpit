@@ -1,0 +1,11 @@
+{
+  "//": "SHAPE of /assets/cockpit-booking.json (served same-origin) and of the :3102 /booking proxy response. Real file is gitignored.",
+  "booking": {
+    "client": "Example Client",
+    "when": "Tomorrow",
+    "time": "14:00",
+    "room": "Room 1",
+    "dateLabel": "Sat 1 Jan",
+    "title": "Appointment"
+  }
+}
