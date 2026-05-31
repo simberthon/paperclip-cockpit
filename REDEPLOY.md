@@ -63,6 +63,33 @@ domain, e.g. `com.example.paperclip-theme.plist`, and log to a path you control.
    ```
 5. `git add … && git commit`.
 
+## Emergency remove (broken install — one command)
+
+If the theme breaks your UI and you can't use Paperclip, run this to strip it
+completely and get back to stock Paperclip immediately:
+
+```bash
+INDEX=$(npm root -g)/paperclipai/node_modules/@paperclipai/server/ui-dist/index.html
+python3 -c "
+import re, sys
+p = '$INDEX'
+with open(p) as f: h = f.read()
+h = re.sub(r'[ \t]*<!-- COCKPIT_START.*?<!-- COCKPIT_END -->\n?', '', h, flags=re.DOTALL)
+with open(p, 'w') as f: f.write(h)
+print('Cockpit removed. Hard-refresh: Cmd+Shift+R (Mac) / Ctrl+Shift+R (Windows/Linux)')
+" 2>/dev/null || python3 -c "
+import re, subprocess
+p = subprocess.check_output(['npm','root','-g']).decode().strip()
+p += '/paperclipai/node_modules/@paperclipai/server/ui-dist/index.html'
+with open(p) as f: h = f.read()
+h = re.sub(r'[ \t]*<!-- COCKPIT_START.*?<!-- COCKPIT_END -->\n?', '', h, flags=re.DOTALL)
+with open(p,'w') as f: f.write(h)
+print('Cockpit removed. Hard-refresh your browser.')
+"
+```
+
+Also unregister the service worker in your browser: **DevTools → Application → Service Workers → Unregister**, then hard-refresh (`Cmd+Shift+R`).
+
 ## Rollback (vN → vN-1)
 
 Set `THEME_VERSION="vN-1"` in `apply-theme.sh`, run `./apply-theme.sh`. Old css

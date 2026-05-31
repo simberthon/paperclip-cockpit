@@ -295,6 +295,7 @@ body { padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important; }
  min-height: var(--command-bar-height) !important;
  z-index: 99999 !important;
  display: flex !important;
+ flex-direction: row !important;
  align-items: center !important;
  justify-content: space-between !important;
  flex-wrap: wrap !important;
@@ -759,7 +760,7 @@ body { padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important; }
 
 /* ── MOBILE (≤760px): wrap the header onto MULTIPLE LINES, never overflow ──
  the user: horizontal scroll made the whole page drag side-to-side. */
-@media (max-width: 760px) {
+@media (max-width: 480px) {
  #cockpit-command-header {
  height: auto !important;
  min-height: 0 !important;
@@ -798,7 +799,7 @@ html, body { max-width: 100% !important; overflow-x: hidden !important; }
  wrapped multi-row mobile header never overlaps content and desktop stays 52px.
  ═══════════════════════════════════════════════════════════════════ */
 body { padding-top: var(--cmd-bar-pad, var(--command-bar-height)) !important; }
-@media (max-width: 760px) {
+@media (max-width: 480px) {
  #cockpit-command-header { height: auto !important; }
 }
 
@@ -1220,7 +1221,7 @@ body { overflow-y: auto !important; }
  §14's existing mobile header breakpoint, so the whole shell switches together.
  Verified no horizontal overflow at 375 / 390 / 414 (scrollWidth==clientWidth).
  ═══════════════════════════════════════════════════════════════════ */
-@media (max-width: 760px) {
+@media (max-width: 480px) {
  /* the fixed-height agent-feed card shell → grow with its content */
  .flex.h-\[320px\].flex-col.overflow-hidden {
  height: auto !important;
