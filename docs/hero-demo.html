@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cockpit HUD — demo render harness</title>
+<!--
+  Standalone, offline render harness for the README hero image (docs/hero.png).
+
+  WHY THIS EXISTS / HOW IT WORKS
+  - The live themed dashboard sits behind Paperclip auth, so a clean screenshot
+    of it is not reachable. This harness reproduces the real Cockpit HUD header
+    bar using the theme's OWN stylesheet (../paperclip-cockpit-theme-v26.css) and
+    the EXACT markup that cockpit-command-center.js -> buildWidget() injects at
+    runtime, filled with the placeholder values from the repo's *.example.json
+    files (cockpit-revenue.example.json / cockpit-booking.example.json /
+    cockpit-quota.example.json) and the template-default "COCKPIT / COMMAND
+    CENTER" brand.
+  - It loads NO JavaScript and makes NO network calls, so it can never touch real
+    revenue/booking/quota/location data — every value below is demo/example only.
+
+  TO RE-RENDER (from repo root):
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --hide-scrollbars \
+      --force-device-scale-factor=2 --window-size=1600,240 \
+      --screenshot=docs/hero.png "docs/hero-demo.html"
+    Old-headless --screenshot captures full content height, so the PNG crops to
+    the bar automatically.
+-->
+<link rel="stylesheet" href="../paperclip-cockpit-theme-v26.css">
+<style>
+  /* ── Harness-only overrides (NOT part of the shipped theme) ──
+     Goal: reproduce the production single-row HUD bar in an isolated page.
+     In the real app the bar lays out as one horizontal command strip; this
+     standalone page lacks the Paperclip app shell + viewport meta that the
+     theme's responsive rules assume, so we pin the desktop layout explicitly:
+       - take the bar out of fixed positioning so the page content box == the bar
+         (lets the full-page screenshot crop tightly to the HUD)
+       - force the natural single horizontal row (no responsive wrap/clip)
+       - freeze the scanline/glow animations for one stable frame
+       - paint the theme's near-black behind it
+     Every VALUE in the bar below is demo/example data — no real data, no JS. */
+  html, body {
+    margin: 0 !important;
+    width: max-content !important; max-width: none !important;
+    overflow: visible !important;
+    background: #050505 !important;
+  }
+  html { padding: 0 !important; }
+  body { padding: 34px !important; }
+  #cockpit-command-header {
+    position: static !important;
+    width: max-content !important; max-width: none !important;
+    min-height: 0 !important; height: auto !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+    padding: 14px 22px !important;
+    animation: none !important;
+  }
+  #cockpit-command-header { display: flex !important; align-items: center !important; }
+  #cockpit-command-header .cmd-zone {
+    display: flex !important; align-items: center !important;
+    flex-wrap: nowrap !important;
+    width: auto !important; flex: 0 0 auto !important;
+  }
+  #cockpit-command-header .cmd-zone-center { margin: 0 26px !important; }
+  #cockpit-command-header::before { animation: none !important; display: none !important; }
+</style>
+</head>
+<body>
+  <div id="cockpit-command-header">
+    <!-- ░░ LEFT zone — identity + system data ░░ -->
+    <div class="cmd-zone cmd-zone-left">
+      <span class="cmd-brand">
+        <span class="cmd-brand-mark">◤</span>
+        <span class="cmd-brand-text"><span class="cmd-brand-name">COCKPIT</span><span class="cmd-brand-sub">COMMAND CENTER</span></span>
+        <span class="cmd-live"><span class="cmd-live-dot"></span>LIVE</span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-block">
+        <span class="cmd-time" id="cmd-time">14:32:08</span>
+        <span class="cmd-date" id="cmd-date">SAT 1 JAN</span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-block">
+        <span class="cmd-weather" id="cmd-weather">☀ 24°C</span>
+        <span class="cmd-loc" id="cmd-loc">📍 Demo City</span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat" title="Goal completion across all companies">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">🎯</span><span class="cmd-stat-label">GOAL</span><span class="cmd-stat-val" id="cmd-goal">73%</span></span>
+        <span class="cmd-bar"><span class="cmd-bar-fill" id="cmd-goal-bar" style="width:73%"></span></span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat cmd-quota" id="cmd-quota-cell" title="Estimated Claude Max session quota used this window — based on Paperclip run volume. Tune the calibration constant if it drifts from your real %.">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">🔋</span><span class="cmd-stat-label">QUOTA</span><span class="cmd-stat-val" id="cmd-quota-pct">42%</span></span>
+        <span class="cmd-bar"><span class="cmd-bar-fill cmd-quota-fill" id="cmd-quota-bar" style="width:42%"></span></span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat" id="cmd-reset-cell" title="Time until your Claude Max session limits reset — 5h rolling window">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">⏱</span><span class="cmd-stat-label">CLAUDE RESET</span></span>
+        <span class="cmd-stat-val" id="cmd-reset-left">2h 58m</span>
+      </span>
+
+      <!-- weekly limits (all models + Sonnet), real %+reset from the quota scrape -->
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat cmd-quota" id="cmd-wkall-cell" title="Weekly Claude Max usage across all models — real %, from the quota scrape. Resets weekly.">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">📊</span><span class="cmd-stat-label">WK ALL</span><span class="cmd-stat-val" id="cmd-wkall-val">35% · Sun 17:00</span></span>
+        <span class="cmd-bar"><span class="cmd-bar-fill cmd-quota-fill" id="cmd-wkall-bar" style="width:35%"></span></span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat cmd-quota" id="cmd-wksonnet-cell" title="Weekly Claude Max usage for Sonnet only — real %, from the quota scrape. Resets weekly.">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">🎵</span><span class="cmd-stat-label">WK SONNET</span><span class="cmd-stat-val" id="cmd-wksonnet-val">12% · Sun 17:00</span></span>
+        <span class="cmd-bar"><span class="cmd-bar-fill cmd-quota-fill" id="cmd-wksonnet-bar" style="width:12%"></span></span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat" id="cmd-quota-upd-cell" title="When the Claude usage numbers were last refreshed">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">🕒</span><span class="cmd-stat-label">UPDATED</span></span>
+        <span class="cmd-stat-val" id="cmd-quota-upd">just now</span>
+      </span>
+    </div>
+
+    <!-- ░░ CENTER zone — business ░░ -->
+    <div class="cmd-zone cmd-zone-center">
+      <span class="cmd-rev" title="Stripe month-to-date revenue per business — live, converted to USD, refreshed hourly">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">💰</span><span class="cmd-stat-label">MTD REVENUE</span></span>
+        <span class="cmd-rev-totals" id="cmd-rev-totals"><span class="cmd-rev-total" title="Gross MTD — full top-line revenue across all businesses"><span class="cmd-rev-tcode">TOTAL</span><span class="cmd-rev-tval">$1.8k</span></span><span class="cmd-rev-total cmd-rev-total-w" title="PI PROFIT (personal profit, ownership-weighted): $1.8k · gross top-line: $1.8k"><span class="cmd-rev-tcode">PI PROFIT</span><span class="cmd-rev-tval">$1.8k</span></span></span>
+        <span class="cmd-rev-chips" id="cmd-rev-chips"><span class="cmd-rev-chip" data-code="BIZ1" title="Example Business One: $1234 MTD (12 charges)"><span class="cmd-rev-code">BIZ1</span><span class="cmd-rev-val">$1.2k</span></span><span class="cmd-rev-chip" data-code="BIZ2" title="Example Business Two: $567 MTD (5 charges)"><span class="cmd-rev-code">BIZ2</span><span class="cmd-rev-val">$567</span></span><span class="cmd-rev-chip" data-code="BIZ3" title="Example Business Three: $0 MTD (0 charges)"><span class="cmd-rev-code">BIZ3</span><span class="cmd-rev-val">$0</span></span></span>
+      </span>
+
+      <span class="cmd-sep"></span>
+      <span class="cmd-stat cmd-stat-next" title="Your next calendar item">
+        <span class="cmd-stat-top"><span class="cmd-stat-ico">📅</span><span class="cmd-stat-label">NEXT BOOKING</span></span>
+        <span class="cmd-stat-val" id="cmd-booking"><span class="cmd-book-client">Example Client</span><span class="cmd-book-when">Tomorrow 14:00 · Room 1</span></span>
+      </span>
+    </div>
+
+    <!-- ░░ RIGHT zone — links + cameras ░░ -->
+    <div class="cmd-zone cmd-zone-right">
+      <span class="cmd-links" id="cmd-links"><a class="cmd-company-link" href="#" title="Demo Company">DEMO</a><a class="cmd-company-link" href="#" title="Acme Co">ACME</a></span>
+    </div>
+  </div>
+</body>
+</html>

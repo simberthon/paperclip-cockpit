@@ -1,6 +1,6 @@
 # Cockpit
 
-<!-- HERO_SCREENSHOT_PLACEHOLDER: Luna will drop a masked live screenshot here -->
+![Cockpit HUD](docs/hero.png)
 
 Turn your Paperclip dashboard into a dark, glassy command center.
 

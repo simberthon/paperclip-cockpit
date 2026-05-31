@@ -19,6 +19,13 @@
 # --- example/placeholder data (SHAPE only — never real values) ---
 !*.example.json
 
+# --- README hero (demo-data render + its standalone harness; no real values) ---
+# Re-include the docs/ dir so git can descend, then whitelist ONLY these two
+# artifacts. Any other file dropped in docs/ stays ignored by the `*` rule above.
+!docs/
+!docs/hero.png
+!docs/hero-demo.html
+
 # Real config + live data stay OUT of git (no whitelist line matches them):
 #   config.json  stripe-config.json  cockpit-booking.json
 #   cockpit-revenue.json  cockpit-quota.json  *.log  node_modules/
